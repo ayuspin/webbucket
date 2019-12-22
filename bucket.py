@@ -19,3 +19,13 @@ class BucketManager:
         objects_list = list(self.storage_client.list_blobs(bucket))
         for obj in objects_list:
             print(obj.name)
+
+    def setup_bucket(self, bucket_name):
+        """Creates a bucket and makes it public"""
+        bucket = self.storage_client.lookup_bucket(bucket_name)
+        if not bucket:
+            bucket = self.storage_client.create_bucket(bucket_name)
+            print('Bucket {} created.'.format(bucket.name))
+            bucket.configure_website("index.html", "404.html")
+            bucket.make_public(recursive=True, future=True)
+            print('Bucket {} made public.'.format(bucket.name))

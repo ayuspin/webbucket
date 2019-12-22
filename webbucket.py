@@ -18,5 +18,10 @@ def list_buckets():
 def list_bucket_objects(bucket_name):
     bucket_manager.list_bucket_objects(bucket_name)
 
+@cli.command()
+@click.argument('bucket_name')
+def setup_bucket(bucket_name):
+    bucket_manager.setup_bucket(bucket_name)
+
 if __name__ == '__main__':
     cli()
